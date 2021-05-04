@@ -19,28 +19,48 @@ template <class T>
 class MessageQueue
 {
 public:
+    
+    T receive();
+    void send(T &&msg);
 
 private:
-    
+    std::mutex _mutex;
+    std::condition_variable _cond;
+    std::deque<T> _messages;
 };
 
 // FP.1 : Define a class „TrafficLight“ which is a child class of TrafficObject. 
 // The class shall have the public methods „void waitForGreen()“ and „void simulate()“ 
 // as well as „TrafficLightPhase getCurrentPhase()“, where TrafficLightPhase is an enum that 
 // can be either „red“ or „green“. Also, add the private method „void cycleThroughPhases()“. 
-// Furthermore, there shall be the private member _currentPhase which can take „red“ or „green“ as its value. 
+// Furthermore, there shall be the private member _currentPhase which can take „red“ or „green“ as its value.
 
-class TrafficLight
+enum class TrafficLightPhase
+{
+  red,
+  green
+};
+
+class TrafficLight : public TrafficObject
 {
 public:
     // constructor / desctructor
+    TrafficLight();
 
     // getters / setters
+    
+    TrafficLightPhase getCurrentPhase();
+    
+    void waitForGreen();
+    void simulate();
 
     // typical behaviour methods
 
 private:
     // typical behaviour methods
+    void cycleThroughPhases();
+    
+    TrafficLightPhase _currentPhase;
 
     // FP.4b : create a private member of type MessageQueue for messages of type TrafficLightPhase 
     // and use it within the infinite loop to push each new TrafficLightPhase into it by calling 
@@ -48,6 +68,8 @@ private:
 
     std::condition_variable _condition;
     std::mutex _mutex;
+    
+    MessageQueue<TrafficLightPhase> _message_queue;
 };
 
 #endif

@@ -15,6 +15,7 @@ void createTrafficObjects_Paris(std::vector<std::shared_ptr<Street>> &streets, s
     // Note: You can use the webp format instead of jpeg
     // According to Google - WebP lossless images are 26% smaller in size compared to PNGs. 
     // WebP lossy images are 25-34% smaller than comparable JPEG images at equivalent SSIM quality index. 
+  //  filename = "/Users/karthi/Desktop/Udacity/CppND-Program-a-Concurrent-Traffic-Simulation/data/paris.jpg";
     filename = "../data/paris.jpg";
 
     // init traffic objects
